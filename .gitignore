@@ -1,0 +1,8 @@
+# Compilação em C
+*.o
+*.exe
+*.out
+*.bin
+
+# Logs
+*.log
