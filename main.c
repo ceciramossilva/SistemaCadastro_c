@@ -3,18 +3,25 @@
 #include <string.h>
 #include "biblioteca.h"
 
+
 int main()
 {
+
 
     Usuario *usuarios = NULL;
     int totalUsuarios = 0;
     Livro *livros = NULL;
     int totalLivros = 0;
+    Emprestimo *emprestimos = NULL;
+    int totalEmprestimos = 0;
     int op;
-    carregarDadosUsuarioBinario(&usuarios, &totalUsuarios, "dadosUsuario.bin");
-    carregarDadosLivroBinario(&livros, &totalLivros, "dadosLivro.bin");
+    carregarUsuarioBinario(&usuarios, &totalUsuarios, "dadosUsuario.bin");
+    carregarLivroBinario(&livros, &totalLivros, "dadosLivro.bin");
+    carregarEmprestimoBinario(&emprestimos, &totalEmprestimos, "dadosEmprestimo.bin");
+
 
     //====MENU====
+
 
     do
     {
@@ -27,6 +34,7 @@ int main()
         printf("Escolha: ");
         scanf("%d", &op);
 
+
         switch (op)
         {
         case 1:
@@ -36,10 +44,10 @@ int main()
             menuLivros(&livros, &totalLivros);
             break;
         case 3:
-            // menuEmprestimos();
+            menuEmprestimos(&emprestimos, &totalEmprestimos, usuarios, totalUsuarios, livros, totalLivros);
             break;
         case 4:
-            gerarRelatorio(livros, totalLivros, usuarios, totalUsuarios, "relatorio.txt");
+            gerarRelatorio(livros, totalLivros, usuarios, totalUsuarios, emprestimos, totalEmprestimos, "relatorio.txt");
             break;
         case 0:
             printf("Encerrando...\n");
@@ -48,11 +56,18 @@ int main()
             printf("Opcao invalida!\n");
         }
 
+
     } while (op != 0);
+
 
     salvarUsuarioBinario(usuarios, totalUsuarios, "dadosUsuario.bin");
     salvarLivroBinario(livros, totalLivros, "dadosLivro.bin");
+    salvarEmprestimoBinario(emprestimos, totalEmprestimos, "dadosEmprestimo.bin");
     free(usuarios);
     free(livros);
+    free(emprestimos);
     return 0;
 }
+
+
+
